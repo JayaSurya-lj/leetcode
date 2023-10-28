@@ -10,44 +10,35 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode* head)
-    {
+    ListNode* reverse(ListNode* head) {
         if(head==NULL||head->next==NULL) return head;
         ListNode* b = reverse(head->next);
-        head->next->next=head;
+        head->next->next = head;
         head->next = NULL;
         return b;
+        
     }
     bool isPalindrome(ListNode* head) {
-        ListNode* c = new ListNode(100);
-        ListNode* temp = head;
-        ListNode* tc = c;
-        while(temp!=NULL) //Must form a deep copy otherwise head also changes
+        ListNode* a = head;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast->next!=NULL && fast->next->next!=NULL) //for left middle
         {
-            ListNode* node = new ListNode(temp->val);
-            tc->next = node;
-            tc = tc->next;
-
-            temp = temp->next;
-
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        c = c->next;
-        ListNode* rev = reverse(c);
-        ListNode* t1 = head;
-        ListNode* t2 = rev;
-        bool flag = true;
-        while(t1!=NULL && t2!=NULL)
+
+        ListNode* b = reverse(slow->next);
+        slow->next = b;
+        while(b!=NULL)
         {
-            cout<<t1->val<<" "<<t2->val<<endl;
-            if(t1->val!=t2->val)
-            {
-                flag = false;
-                cout<<"false";
-                break;
-            }
-            t1 = t1->next;
-            t2 = t2->next;
+            cout<<a->val<<" "<<b->val<<endl;
+            if(a->val!=b->val) return false;
+
+            a = a->next;
+            b = b->next;
         }
-        return flag;
+        return true;
+        
     }
 };
