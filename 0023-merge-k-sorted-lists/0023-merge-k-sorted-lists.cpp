@@ -10,6 +10,12 @@
  */
 class Solution {
 public:
+    void pop_front(vector<ListNode*> &lists)
+    {
+        if (lists.size() > 0) {
+            lists.erase(lists.begin());
+        }
+    }
     ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
         ListNode* c = new ListNode(100);
         ListNode* temp = c;
@@ -46,10 +52,10 @@ public:
 
         while(lists.size()>1)
         {
-            ListNode* a = lists[lists.size()-1];
-            lists.pop_back();
-            ListNode* b = lists[lists.size()-1];
-            lists.pop_back();
+            ListNode* a = lists[0];
+            pop_front(lists);
+            ListNode* b = lists[0];
+            pop_front(lists);
             ListNode* c = mergeTwoLists(a,b);
             lists.push_back(c);
         }
