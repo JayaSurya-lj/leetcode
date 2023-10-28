@@ -22,7 +22,7 @@ public:
         ListNode* c = new ListNode(100);
         ListNode* temp = head;
         ListNode* tc = c;
-        while(temp!=NULL)
+        while(temp!=NULL) //Must form a deep copy otherwise head also changes
         {
             ListNode* node = new ListNode(temp->val);
             tc->next = node;
