@@ -35,24 +35,18 @@ public:
         ListNode* temp2 = b;
         ListNode* ans = new ListNode(100);
         ListNode* temp = ans;
-        while(temp!=NULL && temp1!=NULL && temp2!=NULL)
+        while(temp1!=NULL && temp2!=NULL)
         {
-            if(i%2==0)
-            {
+
                 temp->next = temp1;
                 temp = temp->next;
                 temp1 = temp1->next;
-            }
-            else
-            {
+
                 temp->next = temp2;
                 temp = temp->next;
                 temp2 = temp2->next;
-            }
-            i++;
         }
-        if(temp2!=NULL) temp->next = temp2;
-        else temp->next = temp1;
+        temp->next = temp1;
 
     }
 };
