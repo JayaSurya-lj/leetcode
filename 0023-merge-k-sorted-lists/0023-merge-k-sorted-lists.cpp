@@ -10,38 +10,51 @@
  */
 class Solution {
 public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        ListNode* head = new ListNode(100);
-        ListNode* temp = head;
-        for(int i=0;i<lists.size();i++)
+    ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
+        ListNode* c = new ListNode(100);
+        ListNode* temp = c;
+        while(a!=NULL && b!=NULL)
         {
-            while(temp->next!=NULL)
+            if(a->val <= b->val)
             {
+                temp->next = a;
+                a = a->next;
                 temp = temp->next;
+               
             }
-            ListNode* t = lists[i];
-            temp->next = t;
-        }
-        head = head->next;
-        ListNode* temp1 = head;
-        ListNode* temp2;
-        while(temp1!=NULL)
-        {
-            temp2 = temp1->next;
-            while(temp2!=NULL)
+            else
             {
-                int a = temp1->val;
-                int b = temp2->val;
-                if(a>b)
-                {
-                    temp1->val = b;
-                    temp2->val = a; 
-
-                }
-                temp2 = temp2->next;
+                temp->next = b;
+                b = b->next;
+                temp = temp->next;
+                
             }
-            temp1 = temp1->next;
         }
-        return head;
+        if(b==NULL)
+        {
+            temp->next = a;
+        }
+        if(a==NULL)
+        {
+            temp->next = b;
+        }
+        return c->next;
+        
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size()==0) return NULL;
+
+        while(lists.size()>1)
+        {
+            ListNode* a = lists[lists.size()-1];
+            lists.pop_back();
+            ListNode* b = lists[lists.size()-1];
+            lists.pop_back();
+            ListNode* c = mergeTwoLists(a,b);
+            lists.push_back(c);
+        }
+
+        return lists[0];
+        
     }
 };
