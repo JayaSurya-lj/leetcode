@@ -16,10 +16,10 @@ public:
         ListNode* even = new ListNode(100);
         ListNode* to = odd;
         ListNode* te = even;
-        int idx = 0;
+        int idx = 1;
         while(temp!=NULL)
         {
-            if((idx)%2==0)
+            if((idx)%2!=0)
             {
                 to->next = temp;
                 temp = temp->next;
