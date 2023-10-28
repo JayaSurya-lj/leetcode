@@ -35,12 +35,12 @@ public:
             temp = temp->next;
             n++;
         }
-        if(a) a->next = NULL;
+        if(a) a->next = NULL; //if size of the list is small like 1 or 2 then a is null
         c->next = NULL;
         c = reverseList(b);
         if(a) a->next = c;
         b->next = d;
-        if(a) return head;
+        if(a) return head; //if size if small then return head or else return c ehich is actually the point b that is reversed
         return c;
 
     
