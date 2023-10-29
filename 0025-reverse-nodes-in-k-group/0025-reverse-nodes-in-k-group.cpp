@@ -23,53 +23,28 @@ public:
 
         return c;
     }
-   ListNode* reverseList(ListNode* head) {
-        if(head==NULL||head->next==NULL) return head;
-        ListNode* b = reverseList(head->next);
-        head->next->next = head;
-        head->next = NULL;
-        return b;
-        
-    }
-    ListNode* reverseBetween(ListNode* head, int left, int right) {
-        if(left==right) return head;
-        ListNode* a = NULL;
-        ListNode* b = NULL;
-        ListNode* c = NULL;
-        ListNode* d = NULL;
-        ListNode* temp = head;
-        int n=1;
-        while(temp!=NULL)
-        {
-            if(n==left-1) a = temp;
-            if(n==left) b = temp;
-            if(n==right) c = temp;
-            if(n==right+1) d = temp;
-            temp = temp->next;
-            n++;
-        }
-        if(a) a->next = NULL; //if size of the list is small like 1 or 2 then a is null
-        c->next = NULL;
-        c = reverseList(b);
-        if(a) a->next = c;
-        b->next = d;
-        if(a) return head; //if size if small then return head or else return c which is actually the point b that is reversed
-        return c;
 
-    
-        
-    }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        int length = size(head);
-        int i = 1;
-        int j = i+k-1;
-        while(i<=length && j<=length)
+        int len = size(head);
+        if(len<k or !head) return head;
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *curr = dummy, *prev = dummy, *nex = dummy;
+        while(len>=k)
         {
-            head =  reverseBetween(head, i, j);
-            i +=k ;
-            j = i+k-1;
+            curr = prev->next;
+            nex = curr->next;
+            for(int i=1;i<k;i++) //reverse 2 nodes each iteration
+            {
+                curr->next = nex->next;
+                nex->next = prev->next;
+                prev->next = nex;
+                nex = curr->next;
+            }
+            prev = curr;
+            len-=k;
         }
-        return head;
+        return dummy->next;
 
         
     }
