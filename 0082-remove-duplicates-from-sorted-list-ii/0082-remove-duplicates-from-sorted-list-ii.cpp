@@ -21,16 +21,14 @@ public:
                 while(head->next && head->val==head->next->val)
                 {
                     head = head->next;
-                    temp->next = head->next;
                 }
-
+                temp->next = head->next;
             }
             else temp = temp->next;
 
             head = head->next;
         }
 
-        head = dummy->next;
-        return head;
+        return dummy->next;
     }
 };
