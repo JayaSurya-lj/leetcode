@@ -37,44 +37,35 @@ public:
             return ans;
         }
         int len = size(head);
-        int maxC = len%k;
-        int maxSize = len/k + 1;
+        int count = len%k;
+        int eachSize = len/k;
         ListNode* temp = head;
         ListNode* dummy = new ListNode(100);
         dummy->next = temp;
         int t = k;
-        while(maxC!=0 && temp!=NULL)
+        while(t!=0 && temp!=NULL)
         {
             ListNode* nest = temp;
-            for(int i=1;i<maxSize;i++)
+            bool flag = true;
+            if(count>0)
+            {
+                flag = false;
+                eachSize++;
+                count--;
+            }
+            for(int i=1;i<eachSize;i++)
             {
                 temp = temp->next;
             }
+            if(flag==false) eachSize--;
             nest = temp->next;
             temp->next = NULL;
             ans.push_back(dummy->next);
             dummy->next = nest;
             temp = nest;
-            maxC--;
             t--;
         }
-        int minC = k-maxC;
-        int minSize = len/k;
-        while(minC!=0 && temp!=NULL)
-        {
-            ListNode* nest = temp;
-            for(int i=1;i<minSize;i++)
-            {
-                temp = temp->next;
-            }
-            nest = temp->next;
-            temp->next = NULL;
-            ans.push_back(dummy->next);
-            dummy->next = nest;
-            temp = nest;
-            minC--;
-            t--;
-        }
+
         if(t!=0)
         {
             while(t>0)
