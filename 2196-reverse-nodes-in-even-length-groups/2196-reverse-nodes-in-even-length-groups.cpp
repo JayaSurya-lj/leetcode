@@ -60,30 +60,25 @@ public:
         
     }
     ListNode* reverseEvenLengthGroups(ListNode* head) {
-
-        int c = 1,i=0,j=0;
-        ListNode* temp = head->next;
-        int len = size(temp);
-        head->next = NULL;
-        int even = 1;
-        while(i<len && j<len)
+        ListNode* temp = head;
+        int gap = 1;
+        while(temp && temp->next)
         {
-            if(even%2==0)
-            temp = reverseBetween(temp,i,j);
-            i = j+1;
-            c++;
-            j = i;
-            for(int k=1;k<c;k++) j++;
-            even++;
+            int remLen = 0;
+            ListNode* t = temp->next;
+            for(int i=1;i<=gap+1 && t!=NULL;i++) //since gap+1 nodes
+            {
+                t = t->next;
+                remLen++;
+            }
+            if(remLen < gap+1) gap = remLen-1;
+            if(gap%2!=0) reverseBetween(temp,2,2+gap);
+            gap++;
+            for(int i=1;i<=gap;i++)
+            {
+                temp = temp->next;
+            }
         }
-        int first  = i;
-        int last = len;
-        int total = last - first +1;
-        if(total%2==0)
-        {
-            temp = reverseBetween(temp,first,last);
-        }
-        head->next = temp;
         return head;
     }
 };
