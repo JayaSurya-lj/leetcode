@@ -1,44 +1,25 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        unordered_map<int,int> mp;
+        map<int,int> mp;
+        for(auto x:arr1)
+        {
+            mp[x]++;
+        }
+        int j=0;
         for(int i=0;i<arr2.size();i++)
         {
-            mp[arr2[i]] = i;
+            while(mp[arr2[i]]--) arr1[j++] = arr2[i];
         }
-        for(int i=0;i<arr1.size();i++)
+        for(auto p:mp)
         {
-            for(int j=i+1;j<arr1.size();j++)
+            while(p.second>0)
             {
-                if(mp.find(arr1[i])==mp.end())
-                {
-                    int temp = arr1[i];
-                    arr1[i] = arr1[j];
-                    arr1[j] = temp;
-
-                }
-                else
-                {
-                    if(mp.find(arr1[j])!=mp.end())
-                    {
-                        if(mp[arr1[i]]>mp[arr1[j]])
-                        {
-                            int temp = arr1[i];
-                            arr1[i] = arr1[j];
-                            arr1[j] = temp;
-                        }
-                    }
-                }
+                arr1[j++] = p.first;
+                p.second--;
             }
         }
-        int i;
-        for(i=0;i<arr1.size();i++)
-        {
-            if(mp.find(arr1[i])==mp.end()) break;
-        }
-        sort(arr1.begin()+i,arr1.end());
         return arr1;
 
-        
     }
 };
