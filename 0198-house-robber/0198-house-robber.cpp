@@ -1,27 +1,12 @@
 class Solution {
 public:
-    void robTheHouses(vector<int>&nums,int curr,vector<int>& mem)
-    {
-        if(curr<0) return;
-        if(curr+2<nums.size())
-        mem[curr] = nums[curr] + mem[curr+2];
-        for(int i=curr+3;i<nums.size();i++)
-        {
-            if(i<nums.size())
-            mem[curr] = max(mem[curr],nums[curr] + mem[i]);
+    int rob(vector<int>& arr) {
+        vector<int> dp(arr.size());
+        dp[0] = arr[0];
+        if(arr.size()>1) dp[1] = max(arr[0],arr[1]);
+        for(int i=2;i<arr.size();i++){
+            dp[i] = max(arr[i]+dp[i-2],dp[i-1]);
         }
-        cout<<mem[curr]<<" ";
-        robTheHouses(nums,curr-1,mem);
-    }
-    int rob(vector<int>& nums) {
-        if(nums.size()==1) return nums[0];
-        if(nums.size()==2) return max(nums[0],nums[1]);
-        vector<int> mem(nums.size());
-        mem[nums.size()-1] = nums[nums.size()-1];
-        mem[nums.size()-2] = nums[nums.size()-2];
-        cout<<mem[nums.size()-1]<<" "<<mem[nums.size()-2]<<" ";
-        robTheHouses(nums,nums.size()-3,mem);
-        return max(mem[0],mem[1]);
-        
+        return dp[arr.size()-1];
     }
 };
